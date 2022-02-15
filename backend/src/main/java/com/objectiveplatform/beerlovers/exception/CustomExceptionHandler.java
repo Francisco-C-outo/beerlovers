@@ -1,8 +1,6 @@
 package com.objectiveplatform.beerlovers.exception;
 
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -13,12 +11,14 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,8 +31,8 @@ import java.util.Objects;
 import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
+@EnableWebMvc
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
@@ -91,6 +91,16 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         logger.info(ex.getClass().getName());
 
         final String error = format("%s parameter is missing", ex.getParameterName());
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
+    protected ResponseEntity<Object> handleUnsatisfiedServletRequestParameter(
+            final UnsatisfiedServletRequestParameterException ex, final WebRequest request) {
+        logger.info(ex.getClass().getName());
+
+        final String error = "parameter is missing";
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }

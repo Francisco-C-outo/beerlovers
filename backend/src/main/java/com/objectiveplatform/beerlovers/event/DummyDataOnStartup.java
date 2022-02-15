@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * On startup let's register our user to our db - obviously would not be needed in fully operational application
+ * once again opting for this strategy for simplicity reasons
  */
 @Component
 @RequiredArgsConstructor

@@ -1,13 +1,15 @@
 package com.objectiveplatform.beerlovers.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class BeerResponse {
-    private final List<Beer> beers;
-    private final long totalResults;
+    private List<Beer> beers;
+    private long totalResults;
 }

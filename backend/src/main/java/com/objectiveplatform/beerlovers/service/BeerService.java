@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 import static com.objectiveplatform.beerlovers.util.GenericUtil.isStringAMatch;
 import static java.lang.String.format;
 
+/**
+ * Source of the core functionality in our application. This services handles all the business logic required for each
+ * of our exposed operations on the API layer. Extra functionality not directly related to Beers was extracted to helper
+ * services like @UserService and @PunkApiService
+ */
 @Service
 @RequiredArgsConstructor
 public class BeerService {

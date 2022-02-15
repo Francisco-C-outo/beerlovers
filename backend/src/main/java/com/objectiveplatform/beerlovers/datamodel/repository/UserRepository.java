@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+    //Derived query to find our user by its username (unique column in our db)
     Optional<User> findByUsernameEquals(final String username);
 }

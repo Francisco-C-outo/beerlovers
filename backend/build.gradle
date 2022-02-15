@@ -19,19 +19,31 @@ repositories {
 }
 
 dependencies {
+    //standard spring boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    //javax dependency to help us validate our api models
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    //dependency to implement a simple authentication protocol
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
+    //dependency needed to deal with calls to external api
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    //helps removing boiler plate code and make our classes much more readable
     compileOnly 'org.projectlombok:lombok'
+
+    //Using easy random to generate dummy data in our tests
+    testImplementation 'org.jeasy:easy-random-core:5.0.0'
+
+    testImplementation 'org.springframework.security:spring-security-test:5.5.1'
+
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.jayway.restassured:rest-assured:2.9.0'
 }
 
 tasks.named('test') {
