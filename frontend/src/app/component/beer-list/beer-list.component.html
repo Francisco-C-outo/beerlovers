@@ -1,0 +1,52 @@
+<div class="list row card">
+  <div class="col-md-12" style="margin-top: 10px;">
+    <div class="input-group col-md-5">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by name or description"
+        [(ngModel)]="keyword"
+      />
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="searchBeerCatalogue()"
+        >
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Image</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let beer of beers | paginate: { itemsPerPage: itemsPerPage, currentPage: currPage, totalItems: totalItems }">
+            <td>{{ beer.id }}</td>
+            <td>{{ beer.name }}</td>
+            <td>{{ beer.description }}</td>
+            <td><img height="200" width="80" [src]="beer.image_url" /></td>
+            <td>
+              <div class="button-container">
+                <button type="button" (click)="addToFavorites(beer)"><i class="fa fa-star fa"></i></button>
+            </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right">
+      <pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>
+    </div>
+  </div>
+</div>

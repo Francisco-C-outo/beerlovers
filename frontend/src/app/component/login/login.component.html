@@ -1,0 +1,63 @@
+<h1 style="text-align:center">
+  Log in below, Beer lover!
+</h1>
+<div class="login">
+  <form
+    *ngIf="!isLoggedIn"
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+    class="login-container"
+  >
+  <div class="form-group">
+  <p [ngClass]="{ 'has-error': f.submitted}">
+    <label for="username">Username</label>
+    <input type="text" name="username"
+    [(ngModel)]="form.username"
+    required
+    #username="ngModel"/>
+  </p>
+    <div
+        class="alert alert-danger"
+        role="alert"
+        *ngIf="f.submitted && username.errors"
+      >
+        <div>Username is required!</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password"
+        [(ngModel)]="form.password"
+        required
+        minlength="6"
+        #password="ngModel"/>
+      </p>
+      <div class="alert alert-danger"
+      role="alert" *ngIf="password.errors && f.submitted">
+        <div *ngIf="password.errors['required']">Password is required</div>
+        <div *ngIf="password.errors['minlength']">
+          Password must be at least 6 characters
+        </div>
+        </div>
+      </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block">
+            Login
+          </button>
+        </div>
+        <div class="form-group">
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="f.submitted && isLoginFailed"
+          >
+            Login failed: {{ errorMessage }}
+          </div>
+        </div>
+      </form>
+      </div>
+      
